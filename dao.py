@@ -1,4 +1,4 @@
-import create as c
+import create as model
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 
@@ -10,6 +10,9 @@ class DAOFactory:
         self.session = self.Session()
         self.dao = DAO(self.session)
 
+    def get_dao(self):
+        return self.dao
+
 
 class DAO:
 
@@ -17,62 +20,33 @@ class DAO:
         self.session = session
 
     def get_all_animes(self):
-        return self.session.query(c.Anime).all()
+        return self.session.query(model.Anime).all()
 
     def get_anime_by_id(self, id):
-        return self.session.query(c.Anime).filter_by(id=id).first()
+        return self.session.query(model.Anime).filter_by(id=id).first()
 
     def get_anime_by_name(self, name):
-        return self.session.query(c.Anime).filter_by(name=name).first()
+        return self.session.query(model.Anime).filter_by(name=name).first()
 
-    def get_anime_by_episode(self, episode):
-        return self.session.query(c.Anime).filter_by(episode=episode).first()
-
-    def get_studios(self):
-        return self.session.query(c.Studio).all()
+    def get_all_studios(self):
+        return self.session.query(model.Studio).all()
 
     def get_studio_by_id(self, id):
-        return self.session.query(c.Studio).filter_by(id=id).first()
+        return self.session.query(model.Studio).filter_by(id=id).first()
 
     def get_studio_by_name(self, name):
-        return self.session.query(c.Studio).filter_by(name=name).first()
-
-    def get_anime_by_studio_id(self, studio_id):
-        return self.session.query(c.Anime).filter_by(studio_id=studio_id).all()
-
-    def get_anime_by_studio_name(self, studio_name):
-        return self.session.query(c.Anime).filter_by(studio_name=studio_name).all()
-
-    def get_anime_by_studio_name_and_episode(self, studio_name, episode):
-        return self.session.query(c.Anime).filter_by(studio_name=studio_name, episode=episode).first()
+        return self.session.query(model.Studio).filter_by(name=name).first()
 
     def commit(self):
         self.session.commit()
 
-    def rollback(self):
-        self.session.rollback()
+    def update_anime(self, anime, name, studio, episodes):
+        anime.name = name
+        anime.studio_id = studio
+        anime.ep = episodes
 
-    def add_anime(self, anime):
-        self.session.add(anime)
-        self.commit()
+    def update_studio(self, studio, name):
+        studio.name = name
 
-    def add_studio(self, studio):
-        self.session.add(studio)
-        self.commit()
 
-    def delete_anime(self, anime):
-        self.session.delete(anime)
-        self.commit()
-
-    def delete_studio(self, studio):
-        self.session.delete(studio)
-        self.commit()
-
-    def update_anime(self, anime):
-        self.session.merge(anime)
-        self.commit()
-
-    def update_studio(self, studio):
-        self.session.merge(studio)
-        self.commit()
 
