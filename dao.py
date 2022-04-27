@@ -19,7 +19,7 @@ class DAO:
     def __init__(self, session):
         self.session = session
 
-    def get_all_animes(self):
+    def get_all_anime(self):
         return self.session.query(model.Anime).all()
 
     def get_anime_by_id(self, id):
@@ -40,13 +40,20 @@ class DAO:
     def commit(self):
         self.session.commit()
 
-    def update_anime(self, anime, name, studio, episodes):
+    def update_anime(self, anime, id, name, studio_id, episodes):
+        anime.id = id
         anime.name = name
-        anime.studio_id = studio
+        anime.studio_id = studio_id
         anime.ep = episodes
 
-    def update_studio(self, studio, name):
+    def update_studio(self, studio, id, name):
+        studio.id = id
         studio.name = name
 
+    def add_anime(self, id, name, studio_id, episodes):
+        anime = model.Anime(id, name, studio_id, episodes)
+        self.session.add(anime)
 
-
+    def add_studio(self, id, name):
+        studio = model.Studio(id, name)
+        self.session.add(studio)
