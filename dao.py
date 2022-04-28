@@ -50,10 +50,19 @@ class DAO:
         studio.id = id
         studio.name = name
 
-    def add_anime(self, id, name, studio_id, episodes):
-        anime = model.Anime(id, name, studio_id, episodes)
+    def add_anime(self, name, studio_id, episodes):
+        anime = model.Anime(name=name, studio_id=studio_id, ep=episodes)
         self.session.add(anime)
 
-    def add_studio(self, id, name):
-        studio = model.Studio(id, name)
+    def add_studio(self, name):
+        studio = model.Studio(name=name)
         self.session.add(studio)
+
+    def delete_anime(self, id):
+        anime = self.session.query(model.Anime).filter_by(id=id).first()
+        self.session.delete(anime)
+
+    def delete_studio(self, id):
+        studio = self.session.query(model.Studio).filter_by(id=id).first()
+        self.session.delete(studio)
+

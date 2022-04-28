@@ -35,3 +35,11 @@ class Factory:
     def add_anime(self, name, studio_id, episodes):
         self.dao.add_anime(name, studio_id, episodes)
 
+    def add_studio(self, name):
+        self.dao.add_studio(name)
+
+    def delete_anime(self, anime_id):
+        self.dao.delete_anime(anime_id)
+
+    def delete_studio(self, studio_id):
+        self.dao.delete_studio(studio_id)

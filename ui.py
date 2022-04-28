@@ -98,6 +98,27 @@ def add_anime():
     refresh_table()
 
 
+def add_studio():
+    studio_name = studio_name_entry.get()
+    factory.add_studio(studio_name)
+    factory.commit()
+    refresh_table()
+
+
+def delete_anime():
+    anime = anime_entry.get()
+    factory.delete_anime(int(anime))
+    factory.commit()
+    refresh_table()
+
+
+def delete_studio():
+    studio = studio_entry.get()
+    factory.delete_studio(int(studio))
+    factory.commit()
+    refresh_table()
+
+
 app = Tk()
 frame_search = Frame(app)
 frame_search.grid(row=0, column=0)
@@ -157,14 +178,20 @@ search_anime_btn = Button(frame_buttons, text='Search anime', width=12, command=
 search_anime_btn.grid(row=0, column=0, pady=20)
 search_studio_btn = Button(frame_buttons, text='Search studio', width=12, command=search_studio_id)
 search_studio_btn.grid(row=0, column=1, pady=20)
-refresh_btn = Button(frame_buttons, text='Refresh', width=12, command=refresh_table)
-refresh_btn.grid(row=0, column=4, pady=20)
-update_studio_btn = Button(frame_buttons, text='Update studio', width=12, command=update_studio_data)
-update_studio_btn.grid(row=0, column=3, pady=20)
 update_anime_btn = Button(frame_buttons, text='Update anime', width=12, command=update_anime_data)
 update_anime_btn.grid(row=0, column=2, pady=20)
+update_studio_btn = Button(frame_buttons, text='Update studio', width=12, command=update_studio_data)
+update_studio_btn.grid(row=0, column=3, pady=20)
 add_anime_btn = Button(frame_buttons, text='Add anime', width=12, command=add_anime)
 add_anime_btn.grid(row=1, column=0, pady=20)
+add_studio_btn = Button(frame_buttons, text='Add studio', width=12, command=add_studio)
+add_studio_btn.grid(row=1, column=1, pady=20)
+delete_anime_btn = Button(frame_buttons, text='Delete anime', width=12, command=delete_anime)
+delete_anime_btn.grid(row=1, column=2, pady=20)
+delete_studio_btn = Button(frame_buttons, text='Delete studio', width=12, command=delete_studio)
+delete_studio_btn.grid(row=1, column=3, pady=20)
+refresh_btn = Button(frame_buttons, text='Refresh', width=12, command=refresh_table)
+refresh_btn.grid(row=1, column=4, pady=20)
 
 frame = Frame(app)
 frame.grid(row=3, column=0, columnspan=4, rowspan=6, pady=20, padx=20)
